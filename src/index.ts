@@ -1,18 +1,23 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import userRoutes from "./api/v1/routes/users/index";
+import { PrismaClient } from "@prisma/client";
+import authenRoutes from "./api/v1/routes/authen/index";
 
-dotenv.config()
+const prisma = new PrismaClient();
+export default prisma;
 
-const app = express()
-app.use(cors())
-app.use(express.json())
+dotenv.config();
+const app = express();
+const port = process.env.PORT;
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (_req, res) => {
-  res.send('Hello from backend!')
-})
+app.use('/users', userRoutes);
+app.use('/authen', authenRoutes);
 
-const PORT = process.env.PORT || 4000
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`)
-})
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
