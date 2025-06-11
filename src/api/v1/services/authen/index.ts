@@ -15,6 +15,7 @@ export const login = async (email: string, password: string) => {
     if (!isPasswordValid) {
         throw new Error("Invalid email or password");
     }
+    console.log(jwtSecret);
     const token = jwt.sign(
         {
             id: user.id,

@@ -40,3 +40,38 @@ export const getUsers = async () => {
     });
     return users;
 }
+
+export const updateUser = async (id: number, data: {
+    name?: string;
+}) => {
+    const existingUser = await prisma.users.findUnique({
+        where: { id }
+    })
+    if (!existingUser) {
+        throw new Error("User not found");
+    }
+    const updateData = {
+        name: data.name, 
+    };
+    const user = await prisma.users.update({
+        where: { id },
+        data: updateData,
+    });
+    return {
+        id: user.id,
+        name: user.name,
+    };
+}
+
+export const deleteUser = async (id: number) => {
+    const user = await prisma.users.findUnique({
+        where: { id },
+    });
+    if (!user) {
+        throw new Error("User not found");
+    }
+    await prisma.users.delete({
+        where: { id },
+    });
+    return user;
+}
