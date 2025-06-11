@@ -1,4 +1,4 @@
-# Install Yarn
+# Install Yarn 
 ```sh
  npm install --global yarn 
 ```
@@ -8,9 +8,15 @@ Install Dependencies using
 ```sh 
 yarn
 ```
+
+## Build project
+```sh
+yarn build
+```
+
 ## Docker compose
 ```sh
-docker-compose up -D
+docker-compose up --build
 ```
 
 ### Run project
