@@ -1,25 +1,25 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
     ports:
       - "5432:5432"
-    restart: always
     environment:
-      POSTGRES_USER: ${DB_POSTGRESDB_USER}
-      POSTGRES_PASSWORD: ${DB_POSTGRESDB_PASSWORD}
-      POSTGRES_DB: ${DB_POSTGRESDB_DATABASE}
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: test
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: .
+    build:
+      context: .
+      args:
+        DATABASE_URL: postgresql://admin:password@postgres:5432/test
     container_name: backend
     ports:
       - "4000:4000"
     environment:
-      DATABASE_URL: postgresql://admin:password@localhost:5432/test
+      DATABASE_URL: postgresql://admin:password@postgres:5432/test
     depends_on:
       - postgres
     volumes:
