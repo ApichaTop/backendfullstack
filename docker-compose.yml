@@ -12,6 +12,19 @@ services:
       POSTGRES_DB: ${DB_POSTGRESDB_DATABASE}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      
+
+  backend:
+    build: .
+    container_name: backend
+    ports:
+      - "4000:4000"
+    environment:
+      DATABASE_URL: postgresql://admin:password@localhost:5432/test
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+      - /app/node_modules
+
 volumes:
   postgres_data:
